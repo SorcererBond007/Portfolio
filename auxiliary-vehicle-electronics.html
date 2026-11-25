@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auxiliary Vehicle Electronics | Leighton Hartwell</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Interactive Architecture Diagram Styles */
+    .arch-wrap {
+      padding: 28px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 44px;
+    }
+    .arch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .arch-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .arch-hint {
+      font-size: 12px;
+      color: var(--muted);
+      background: #F1F5F9;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .arch-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1.15fr auto 1.2fr;
+      align-items: center;
+      gap: 10px;
+    }
+    .arch-node {
+      border: 2px solid #CBD5E1;
+      border-radius: 10px;
+      padding: 14px 12px;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
+    .arch-node:hover, .arch-node.active {
+      border-color: var(--coral);
+      background: #FFF5F5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 71, 71, 0.12);
+    }
+    .node-tag {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .node-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .node-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      color: #94A3B8;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+    }
+    .arch-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .arch-inspector {
+      margin-top: 22px;
+      padding: 16px 20px;
+      background: var(--bg-tint);
+      border-left: 4px solid var(--coral);
+      border-radius: 6px;
+    }
+    .arch-inspector h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .arch-inspector p {
+      font-size: 14px;
+      color: var(--slate);
+    }
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 84vh;
+      border-radius: 8px;
+    }
+    @media (max-width: 820px) {
+      .arch-flow { grid-template-columns: 1fr; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <nav class="nav-links">
+        <a href="index.html" class="active">Work</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a href="index.html" class="brand-title">Leighton Hartwell</a>
+      <div class="social-links">
+        <a href="https://linkedin.com/in/lhartwell007" target="_blank" aria-label="LinkedIn">in</a>
+        <a href="https://github.com" target="_blank" aria-label="GitHub">GH</a>
+        <a href="mailto:leightonmhartwell@gmail.com" aria-label="Email">&#9993;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>Auxiliary Vehicle Electronics</h1>
+      <p class="page-intro">
+        Across the Yamaha UMAX Rally 2+2 and Drive2 platforms, I engineered and integrated isolated 12V auxiliary electrical systems across three utility vehicles—supporting high-draw lighting, audio, and dual-view camera hardware without risking starter battery depletion.
+      </p>
+    </div>
+
+    <!-- 3-Column Metadata Strip -->
+    <div class="meta-strip">
+      <div>
+        <span class="meta-label">Platforms</span>
+        <span class="meta-value">Yamaha UMAX &amp; Drive2</span>
+      </div>
+      <div>
+        <span class="meta-label">System</span>
+        <span class="meta-value">12V Dual-Battery</span>
+      </div>
+      <div>
+        <span class="meta-label">Hardware</span>
+        <span class="meta-value">VSR &amp; Fuse Block</span>
+      </div>
+    </div>
+
+    <!-- Interactive Architecture Diagram -->
+    <section class="arch-wrap">
+      <div class="arch-header">
+        <h2>12V Auxiliary Power &amp; Electronics Architecture</h2>
+        <span class="arch-hint">Click any block to inspect specs</span>
+      </div>
+
+      <div class="arch-flow">
+        <div class="arch-node active" data-stage="primary">
+          <span class="node-tag">Stage 01</span>
+          <div class="node-title">Primary 12V &amp; Alternator</div>
+          <div class="node-sub">OEM Starter Circuit</div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <div class="arch-node" data-stage="vsr">
+          <span class="node-tag">Stage 02</span>
+          <div class="node-title">140A VSR Isolator</div>
+          <div class="node-sub">Auto-Sense Charging</div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <div class="arch-stack">
+          <div class="arch-node" data-stage="battery">
+            <span class="node-tag">Stage 03A</span>
+            <div class="node-title">Secondary 12V Battery</div>
+            <div class="node-sub">Isolated Reserve</div>
+          </div>
+          <div class="arch-node" data-stage="fuse">
+            <span class="node-tag">Stage 03B</span>
+            <div class="node-title">Fused Distribution Bus</div>
+            <div class="node-sub">Overcurrent Protection</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <div class="arch-stack">
+          <div class="arch-node" data-stage="lighting">
+            <span class="node-tag">Load 01</span>
+            <div class="node-title">LED Flood &amp; Chase Bars</div>
+          </div>
+          <div class="arch-node" data-stage="audio">
+            <span class="node-tag">Load 02</span>
+            <div class="node-title">G3 Party Bar Audio</div>
+          </div>
+          <div class="arch-node" data-stage="cameras">
+            <span class="node-tag">Load 03</span>
+            <div class="node-title">Dual-View Camera System</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-inspector">
+        <h3 id="insp-title">Primary 12V Starter Bank &amp; Alternator</h3>
+        <p id="insp-desc">Supplies standard vehicle ignition and OEM electronics. Isolated from high-draw auxiliary loads to guarantee reliable engine cranking.</p>
+      </div>
+    </section>
+
+    <!-- Engineering Deep-Dive -->
+    <section class="section-block">
+      <h2>System Architecture &amp; Engineering</h2>
+
+      <div class="pillar">
+        <h3><span>01.</span>Dual-Battery Power Isolation</h3>
+        <p>Installed a secondary 12V accessory battery paired with a Voltage Sensitive Relay (VSR) to isolate aftermarket loads from the primary starting bank. When the engine is running, the VSR bridges both banks to charge the auxiliary battery; when parked, it disconnects automatically to prevent starter battery drain.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><span>02.</span>Load Distribution &amp; Weatherproofing</h3>
+        <p>Routed properly gauged power and ground runs through dedicated fuses and ignition-switched rocker panels to control the roof floodlight bar, multi-function chase bar, whip lights, underglow, and G3 Party Bar audio system. Sealed connections and under-windscreen routing protect the harness against rain and washdowns.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><span>03.</span>Custom Aluminum Fabrication &amp; Visibility</h3>
+        <p>Fabricated custom aluminum mounting brackets to integrate a dual-view front and rear camera system alongside the forward LED light bar, positioning the sensors cleanly clear of suspension travel while routing video feeds to the cockpit display.</p>
+      </div>
+    </section>
+
+    <!-- 2x2 Annotated Gallery -->
+    <section class="section-block" style="max-width:1040px;">
+      <h2>Build &amp; Integration Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/umax-day.jpg" alt="Completed Yamaha UMAX Rally 2+2 build" />
+          <div class="gallery-caption"><strong>Fig 1.</strong> Completed Yamaha UMAX Rally 2+2 build prior to night testing.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/umax-night.jpg" alt="Night lighting test of auxiliary LEDs" />
+          <div class="gallery-caption"><strong>Fig 2.</strong> Full auxiliary LED array (roof floodlight, chase bar, whips, and underglow) running on the isolated 12V bus.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/cockpit-display.jpg" alt="Cockpit display and camera monitor" />
+          <div class="gallery-caption"><strong>Fig 3.</strong> Cockpit integration featuring the Admiral telemetry display and dual-view camera monitor.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/front-bracket.jpg" alt="Custom aluminum camera and light bracket" />
+          <div class="gallery-caption"><strong>Fig 4.</strong> Custom-fabricated aluminum brackets securing the forward camera and auxiliary light bar.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+    <img id="lightbox-img" src="" alt="Enlarged project photo" />
+  </div>
+
+  <footer class="site-footer">
+    &copy; Leighton Hartwell &bull; Electrical Engineering Portfolio
+  </footer>
+
+  <script>
+    const stages = {
+      primary: {
+        title: "Primary 12V Starter Bank & Alternator",
+        desc: "Supplies standard vehicle ignition and OEM electronics. Isolated from high-draw auxiliary loads to guarantee reliable engine cranking."
+      },
+      vsr: {
+        title: "140A Voltage Sensitive Relay (VSR)",
+        desc: "Automatically bridges the primary and auxiliary banks once charging voltage exceeds ~13.3V, and isolates them below ~12.8V to prevent starter battery drain."
+      },
+      battery: {
+        title: "Secondary 12V Accessory Battery",
+        desc: "Dedicated 12V power reserve powering all aftermarket lighting, audio, and camera systems independently of the primary starter battery."
+      },
+      fuse: {
+        title: "Fused Distribution Bus & Ignition Switching",
+        desc: "Centralized blade fuse block with dedicated circuit protection and ignition-switched rocker control to eliminate parasitic drain when parked."
+      },
+      lighting: {
+        title: "High-Output LED Lighting Array",
+        desc: "Roof floodlight bar, multi-function chase bar, whip lights, and underglow controlled via dash-mounted backlit rocker switches."
+      },
+      audio: {
+        title: "G3 Party Bar Audio System",
+        desc: "Overhead marine-grade soundbar wired with dedicated inline fusing and weather-sealed connections for washdown and rain durability."
+      },
+      cameras: {
+        title: "Dual-View Camera & Cockpit Display",
+        desc: "Front and rear camera feeds mounted on custom-fabricated aluminum brackets, routed cleanly under the windscreen to the cockpit monitor."
+      }
+    };
+
+    document.querySelectorAll('.arch-node').forEach(node => {
+      node.addEventListener('click', () => {
+        document.querySelectorAll('.arch-node').forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+        const info = stages[node.dataset.stage];
+        document.getElementById('insp-title').textContent = info.title;
+        document.getElementById('insp-desc').textContent = info.desc;
+      });
+    });
+
+    function openLightbox(card) {
+      const src = card.querySelector('img').src;
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+  </script>
+
+</body>
+</html>
