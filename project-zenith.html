@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>"Zenith" Rocket Avionics | Leighton Hartwell</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Diagrams */
+    .arch-wrap {
+      padding: 28px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 44px;
+    }
+    .arch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .arch-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .arch-hint {
+      font-size: 12px;
+      color: var(--muted);
+      background: #F1F5F9;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .arch-flow {
+      display: grid;
+      grid-template-columns: 1.15fr auto 1.15fr auto 1fr auto 1.15fr;
+      align-items: center;
+      gap: 10px;
+    }
+    .arch-node {
+      border: 2px solid #CBD5E1;
+      border-radius: 10px;
+      padding: 14px 12px;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
+    .arch-node:hover, .arch-node.active {
+      border-color: var(--coral);
+      background: #FFF5F5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 71, 71, 0.12);
+    }
+    .node-tag {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .node-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .node-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      color: #94A3B8;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+    }
+    .arch-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .arch-inspector {
+      margin-top: 22px;
+      padding: 16px 20px;
+      background: var(--bg-tint);
+      border-left: 4px solid var(--coral);
+      border-radius: 6px;
+    }
+    .arch-inspector h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .arch-inspector p {
+      font-size: 14px;
+      color: var(--slate);
+    }
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 84vh;
+      border-radius: 8px;
+    }
+    @media (max-width: 820px) {
+      .arch-flow { grid-template-columns: 1fr; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <nav class="nav-links">
+        <a href="index.html" class="active">Work</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a href="index.html" class="brand-title">Leighton Hartwell</a>
+      <div class="social-links">
+        <a href="https://linkedin.com/in/lhartwell007" target="_blank" aria-label="LinkedIn">in</a>
+        <a href="https://github.com" target="_blank" aria-label="GitHub">GH</a>
+        <a href="mailto:leightonmhartwell@gmail.com" aria-label="Email">&#9993;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>"Zenith" Rocket Avionics</h1>
+      <p class="page-intro">
+        As a member of the Project Zenith avionics subteam, I led hardware integration and 915 MHz LoRa RF telemetry validation for a NASA Student Launch Challenge rocket, where I eliminated airframe RF interference and cut telemetry latency across a 4,800 ft operational range.
+      </p>
+    </div>
+
+    <!-- 3-Column Metadata Strip -->
+    <div class="meta-strip">
+      <div>
+        <span class="meta-label">Competition</span>
+        <span class="meta-value">NASA Student Launch</span>
+      </div>
+      <div>
+        <span class="meta-label">Telemetry Link</span>
+        <span class="meta-value">915 MHz LoRa RF</span>
+      </div>
+      <div>
+        <span class="meta-label">Hardware &amp; CAD</span>
+        <span class="meta-value">Silicdyne &amp; SolidWorks</span>
+      </div>
+    </div>
+
+    <!-- Interactive Telemetry & Avionics Architecture Diagram -->
+    <section class="arch-wrap">
+      <div class="arch-header">
+        <h2>915 MHz Telemetry &amp; Avionics Link Architecture</h2>
+        <span class="arch-hint">Click any block to inspect engineering details</span>
+      </div>
+
+      <div class="arch-flow">
+        <!-- Stage 1 -->
+        <div class="arch-stack">
+          <div class="arch-node active" data-stage="fluctus">
+            <span class="node-tag">Airborne Avionics</span>
+            <div class="node-title">Silicdyne Fluctus</div>
+            <div class="node-sub">Flight Computer &amp; Sensors</div>
+          </div>
+          <div class="arch-node" data-stage="bay">
+            <span class="node-tag">Mechanical CAD</span>
+            <div class="node-title">Avionics Bay Sled</div>
+            <div class="node-sub">SolidWorks Layout</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <!-- Stage 2 -->
+        <div class="arch-node" data-stage="antenna">
+          <span class="node-tag">RF Optimization</span>
+          <div class="node-title">Antenna Orientation</div>
+          <div class="node-sub">Structural Rod Isolation</div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <!-- Stage 3 -->
+        <div class="arch-node" data-stage="rf">
+          <span class="node-tag">Downlink</span>
+          <div class="node-title">915 MHz LoRa Link</div>
+          <div class="node-sub">4,800 ft Range Validation</div>
+        </div>
+
+        <div class="arch-arrow">&rarr;</div>
+
+        <!-- Stage 4 -->
+        <div class="arch-node" data-stage="ground">
+          <span class="node-tag">Ground Segment</span>
+          <div class="node-title">SteadyBlue Station</div>
+          <div class="node-sub">Live Telemetry &amp; RSSI</div>
+        </div>
+      </div>
+
+      <div class="arch-inspector">
+        <h3 id="insp-title">Silicdyne Fluctus Flight Computer</h3>
+        <p id="insp-desc">Primary onboard flight computer handling barometric/IMU flight state tracking, pyro deployment logic, and real-time packet transmission over the 915 MHz ISM band.</p>
+      </div>
+    </section>
+
+    <!-- Engineering Deep-Dive -->
+    <section class="section-block">
+      <h2>Avionics Integration &amp; RF Validation</h2>
+
+      <div class="pillar">
+        <h3><span>01.</span>Avionics Bay Layout &amp; SolidWorks Modeling</h3>
+        <p>Modeled the internal avionics bay assembly in SolidWorks to organize flight computers, power sources, and wiring harnesses within tight airframe constraints while maintaining clean mechanical access for pre-launch arming and inspection.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><span>02.</span>RF Interference Mitigation &amp; Antenna Reconfiguration</h3>
+        <p>Diagnosed severe RF signal attenuation and packet timeouts caused by proximity between the transmitting antenna and metallic structural airframe rods. Reconfigured internal electronics and antenna orientation to establish clean RF clearance, eliminating packet loss and ground station timeouts.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><span>03.</span>4,800 ft End-to-End Telemetry Validation</h3>
+        <p>Validated end-to-end wireless telemetry between the airborne Silicdyne Fluctus flight computer and the bundled SteadyBlue ground station. Conducted field range testing tracking RSSI and link stability across a 4,800 ft operational envelope, reducing end-to-end telemetry latency by approximately 100 ms.</p>
+      </div>
+    </section>
+
+    <!-- 2x2 Gallery -->
+    <section class="section-block" style="max-width:1040px;">
+      <h2>Hardware, CAD &amp; Testing Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/zenith-airframe.jpg" alt="Zenith high-power rocket airframe" />
+          <div class="gallery-caption"><strong>Fig 1.</strong> "Anomaly" high-power launch vehicle built by the Project Zenith team for the NASA Student Launch Challenge.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/zenith-cad.jpg" alt="SolidWorks CAD model of the avionics bay" />
+          <div class="gallery-caption"><strong>Fig 2.</strong> SolidWorks CAD assembly of the avionics bay sled showing component spacing and antenna clearance from structural rods.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/zenith-avionics-bay.jpg" alt="Silicdyne Fluctus flight computer mounted in bay" />
+          <div class="gallery-caption"><strong>Fig 3.</strong> Integrated Silicdyne Fluctus flight computer and reconfigured 915 MHz antenna routing inside the avionics bay.</div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="images/zenith-ground-station.jpg" alt="SteadyBlue ground station telemetry testing" />
+          <div class="gallery-caption"><strong>Fig 4.</strong> SteadyBlue ground station receiving live RSSI and flight telemetry during 4,800 ft range validation testing.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+    <img id="lightbox-img" src="" alt="Enlarged project photo" />
+  </div>
+
+  <footer class="site-footer">
+    &copy; Leighton Hartwell &bull; Electrical Engineering Portfolio
+  </footer>
+
+  <script>
+    const stages = {
+      fluctus: {
+        title: "Silicdyne Fluctus Flight Computer",
+        desc: "Primary onboard flight computer handling barometric/IMU flight state tracking, pyro deployment logic, and real-time packet transmission over the 915 MHz ISM band."
+      },
+      bay: {
+        title: "SolidWorks Avionics Bay Sled",
+        desc: "Custom-modeled internal mounting sled optimizing center-of-gravity alignment, vibration isolation, and physical separation between power wiring and RF components."
+      },
+      antenna: {
+        title: "Antenna Orientation & Structural Rod Isolation",
+        desc: "Reoriented the onboard 915 MHz antenna away from parallel metallic airframe rods to eliminate near-field detuning, signal shadowing, and packet drops."
+      },
+      rf: {
+        title: "915 MHz LoRa Downlink (4,800 ft Range)",
+        desc: "Validated link budget and received signal strength (RSSI) across a 4,800 ft operational distance—matching the vehicle's target apogee profile with ~100 ms lower latency."
+      },
+      ground: {
+        title: "SteadyBlue Ground Station",
+        desc: "Ground-based receiver and telemetry interface decoding live altitude, velocity, and link health metrics with zero ground station timeouts after antenna reconfiguration."
+      }
+    };
+
+    document.querySelectorAll('.arch-node').forEach(node => {
+      node.addEventListener('click', () => {
+        document.querySelectorAll('.arch-node').forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+        const info = stages[node.dataset.stage];
+        document.getElementById('insp-title').textContent = info.title;
+        document.getElementById('insp-desc').textContent = info.desc;
+      });
+    });
+
+    function openLightbox(card) {
+      const src = card.querySelector('img').src;
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+  </script>
+
+</body>
+</html>
